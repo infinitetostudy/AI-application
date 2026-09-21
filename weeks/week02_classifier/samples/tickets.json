@@ -1,0 +1,62 @@
+[
+  {
+    "ticket_id": "t-001",
+    "channel": "email",
+    "subject": "无法登录，提示密码错误",
+    "body": "账号是 13800138000，昨天还能登录。今天一直提示密码错误，我没改过密码。麻烦尽快处理。"
+  },
+  {
+    "ticket_id": "t-002",
+    "channel": "email",
+    "subject": "订单 ORD-88421 被重复扣款",
+    "body": "我的邮箱是 张三@example.com。同一笔会员续费扣了两次，单号 ORD-88421，请退一笔钱。"
+  },
+  {
+    "ticket_id": "t-003",
+    "channel": "chat",
+    "subject": "导出 CSV 报 500",
+    "body": "后台 /settings/export 点导出就 500。浏览器 Chrome 126，大约 14:03 发生。这是线上故障，客户都在等报表。"
+  },
+  {
+    "ticket_id": "t-004",
+    "channel": "email",
+    "subject": "希望支持飞书通知",
+    "body": "我们团队用飞书。工单状态变更时希望推到飞书群，有 webhook 就可以。这不是故障，是功能建议。"
+  },
+  {
+    "ticket_id": "t-005",
+    "channel": "email",
+    "subject": "发票抬头怎么改",
+    "body": "公司名称从「星河科技」改成「星河智能」。请问增值税发票抬头在哪里修改？不急。"
+  },
+  {
+    "ticket_id": "t-006",
+    "channel": "form",
+    "subject": "客服态度很差",
+    "body": "工单 t-00991 里客服直接说「自己看帮助中心」。我要投诉这个处理方式，请主管跟进。"
+  },
+  {
+    "ticket_id": "t-007",
+    "channel": "email",
+    "subject": "你好",
+    "body": "在吗？有个事情想问一下，回头再说吧。"
+  },
+  {
+    "ticket_id": "t-008",
+    "channel": "email",
+    "subject": "生产环境全站打不开",
+    "body": "https://app.example.com 从 21:40 起全部 502。账号 acct-2201。这是 P0，请马上升级值班。"
+  },
+  {
+    "ticket_id": "t-009",
+    "channel": "chat",
+    "subject": "Pro 套餐和 Team 套餐差在哪",
+    "body": "我们 8 个人，想知道 Pro 和 Team 在席位、SSO、审计日志上的区别，有对比表吗？"
+  },
+  {
+    "ticket_id": "t-010",
+    "channel": "email",
+    "subject": "不知道算不算 bug",
+    "body": "有时候按钮是灰的。可能是我网不好，也可能是权限。截图我回头找找。先记一笔。"
+  }
+]

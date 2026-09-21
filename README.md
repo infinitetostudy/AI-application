@@ -7,7 +7,8 @@
 ## 当前进度
 
 - [x] 第 1 周骨架：流式 Chat API（可换模型地址）
-- [ ] 第 2–16 周按 `weeks/` 目录推进，详见 [ROADMAP.md](ROADMAP.md)
+- [x] 第 2 周：结构化工单分类（JSON Schema + 低置信度转人工）
+- [ ] 第 3–16 周按 `weeks/` 目录推进，详见 [ROADMAP.md](ROADMAP.md)
 
 ## 目录
 
@@ -31,10 +32,18 @@ cd E:\AI-application
 copy .env.example .env
 uv sync
 uv run python scripts/check_env.py
-uv run uvicorn weeks.week01_chat_api.app.main:app --reload --port 8000
+uv run uvicorn weeks.week01_chat_api.app.main:app --reload --port 8010
 ```
 
-打开 http://127.0.0.1:8000/health
+打开 http://127.0.0.1:8010/health
+
+## 第 2 周
+
+```powershell
+uv run python -m weeks.week02_classifier.run
+```
+
+API：`uv run uvicorn weeks.week02_classifier.app.main:app --reload --port 8011`
 
 换模型只改 `.env` 里的 `LLM_BASE_URL` / `LLM_MODEL`，例如 Ollama：
 

@@ -15,6 +15,7 @@ class Settings(BaseSettings):
     llm_model: str = "gpt-4.1-mini"
     request_timeout_s: float = 60.0
     max_tokens: int = 1024
+    classify_confidence_threshold: float = 0.7
 
 
 settings = Settings()

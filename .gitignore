@@ -25,6 +25,7 @@ data/indexes/*
 .langfuse/
 .n8n/
 .dify/
+weeks/**/output/
 
 .idea/
 .vscode/
