@@ -126,8 +126,34 @@ class LLMClient:
             payload["response_format"] = {"type": "json_object"}
             data = await self._post(payload)
 
-        raw = _message_text(data)
-        value = _validate_model(response_model, raw)
+        last_error: Exception | None = None
+        for candidate in _candidate_texts(data):
+            raw = candidate
+            try:
+                value = _validate_model(response_model, candidate)
+                break
+            except (ValidationError, json.JSONDecodeError, ValueError) as exc:
+                last_error = exc
+        else:
+            if used_format != "json_object":
+                used_format = "json_object"
+                payload["response_format"] = {"type": "json_object"}
+                data = await self._post(payload)
+                for candidate in _candidate_texts(data):
+                    raw = candidate
+                    try:
+                        value = _validate_model(response_model, candidate)
+                        break
+                    except (ValidationError, json.JSONDecodeError, ValueError) as exc:
+                        last_error = exc
+                else:
+                    if last_error is not None:
+                        raise last_error
+                    raise ValueError("model returned empty content")
+            elif last_error is not None:
+                raise last_error
+            else:
+                raise ValueError("model returned empty content")
         return ParsedResult(
             value=value,
             raw_text=raw,
@@ -174,13 +200,51 @@ def _usage(data: dict[str, Any]) -> dict[str, int]:
     }
 
 
-def _message_text(data: dict[str, Any]) -> str:
+def _candidate_texts(data: dict[str, Any]) -> list[str]:
     message = data["choices"][0]["message"]
+    texts: list[str] = []
     for key in ("content", "reasoning_content"):
         text = _coerce_text(message.get(key))
         if text:
-            return text
-    raise ValueError("model returned empty content")
+            texts.append(text)
+    return texts
+
+
+def _extract_json_payloads(text: str) -> list[str]:
+    payloads: list[str] = []
+    decoder = json.JSONDecoder()
+    index = 0
+    while index < len(text):
+        start = text.find("{", index)
+        if start < 0:
+            break
+        try:
+            obj, offset = decoder.raw_decode(text[start:])
+        except json.JSONDecodeError:
+            index = start + 1
+            continue
+        if isinstance(obj, dict):
+            payloads.append(json.dumps(obj, ensure_ascii=False))
+        index = start + offset
+    return payloads
+
+
+def _validate_model(response_model: type[T], raw: str) -> T:
+    text = _FENCE_RE.sub("", raw.strip())
+    if text.startswith("{") or text.startswith("["):
+        try:
+            return response_model.model_validate_json(text)
+        except (ValidationError, json.JSONDecodeError):
+            pass
+    last_error: Exception | None = None
+    for payload in _extract_json_payloads(text):
+        try:
+            return response_model.model_validate_json(payload)
+        except ValidationError as exc:
+            last_error = exc
+    if last_error is not None:
+        raise last_error
+    raise ValueError("no JSON object found in model output")
 
 
 def _coerce_text(content: Any) -> str:
@@ -194,14 +258,3 @@ def _coerce_text(content: Any) -> str:
         ]
         return "".join(parts).strip()
     return ""
-
-
-def _validate_model(response_model: type[T], raw: str) -> T:
-    text = _FENCE_RE.sub("", raw.strip())
-    try:
-        return response_model.model_validate_json(text)
-    except (ValidationError, json.JSONDecodeError):
-        match = re.search(r"\{.*\}", text, re.DOTALL)
-        if match:
-            return response_model.model_validate_json(match.group(0))
-        raise

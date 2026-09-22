@@ -1,0 +1,12 @@
+[
+  {"ticket_id": "t-001", "intent": "account", "priority": "medium", "needs_human": false},
+  {"ticket_id": "t-002", "intent": "billing", "priority": "high", "needs_human": true},
+  {"ticket_id": "t-003", "intent": "bug", "priority": "high", "needs_human": true},
+  {"ticket_id": "t-004", "intent": "feature", "priority": "low", "needs_human": false},
+  {"ticket_id": "t-005", "intent": "billing", "priority": "low", "needs_human": false},
+  {"ticket_id": "t-006", "intent": "complaint", "priority": "high", "needs_human": true},
+  {"ticket_id": "t-007", "intent": "other", "priority": "low", "needs_human": true},
+  {"ticket_id": "t-008", "intent": "bug", "priority": "critical", "needs_human": true},
+  {"ticket_id": "t-009", "intent": "question", "priority": "low", "needs_human": false},
+  {"ticket_id": "t-010", "intent": "other", "priority": "low", "needs_human": true}
+]

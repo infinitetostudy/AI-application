@@ -16,6 +16,7 @@ class Settings(BaseSettings):
     request_timeout_s: float = 60.0
     max_tokens: int = 1024
     classify_confidence_threshold: float = 0.7
+    context_max_body_chars: int = 800
 
 
 settings = Settings()

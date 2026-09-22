@@ -8,7 +8,8 @@
 
 - [x] 第 1 周骨架：流式 Chat API（可换模型地址）
 - [x] 第 2 周：结构化工单分类（JSON Schema + 低置信度转人工）
-- [ ] 第 3–16 周按 `weeks/` 目录推进，详见 [ROADMAP.md](ROADMAP.md)
+- [x] 第 3 周：上下文预算、prompt 对比、request_id 幂等
+- [ ] 第 4–16 周按 `weeks/` 目录推进，详见 [ROADMAP.md](ROADMAP.md)
 
 ## 目录
 
@@ -44,6 +45,12 @@ uv run python -m weeks.week02_classifier.run
 ```
 
 API：`uv run uvicorn weeks.week02_classifier.app.main:app --reload --port 8011`
+
+## 第 3 周
+
+```powershell
+uv run python -m weeks.week03_context
+```
 
 换模型只改 `.env` 里的 `LLM_BASE_URL` / `LLM_MODEL`，例如 Ollama：
 
